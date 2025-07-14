@@ -22,7 +22,7 @@ app.use(express.json());
 
 
 app.use(session({
-  secret: 'test',
+  secret: process.env.SESSION_KEY,
   resave: false,
   saveUninitialized: false,
   store: MongoStore.create({
