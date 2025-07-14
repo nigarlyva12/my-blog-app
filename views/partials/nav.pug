@@ -1,0 +1,94 @@
+nav
+    .nav-left
+        a(href="/") Home
+        a(href="/blogs") Blogs
+        a(href="/about") About
+        if user && user.isAdmin 
+            a(href="/admin/blog/new") New Blog
+    .nav-center
+        .logo The Stacked Dev
+    .nav-right
+        button#theme-toggle(aria-label="Toggle light/dark theme") 🌓
+
+        if !user 
+            button.join-btn#open-join-modal Join⚡
+            button.login-btn#open-login-modal Login 👋🏻
+        else 
+            div.profile-container
+                a.profile-link( title='View Profile') 
+                   span 👤 #{user.username}
+                ul.profile-dropdown
+                    li
+                        a(href='/user') Profile
+                    li
+                        a.logout-btn(href='/logout') Logout
+        
+        
+div#join-modal.modal 
+    div.modal-content
+        span.close-button &times;
+        h2 Join the Blog 
+        form(action='/register', method='POST')
+            label(for='username') Username 
+            input(type ='text', name='username', required)
+
+            label(for='email') Email
+            input(type ='email', name='email', required)
+
+            label(for='password') Password 
+            input(type ='password', name='password', required)
+
+            button(type='submit') Subscribe  
+           
+div#login-modal.modal 
+    div.modal-content 
+        span.close-button &times;
+        h2 Login 
+        form(action = '/login', method='POST')
+          label(for='email') Email
+          input(type ='email', name='email', required)
+
+          label(for='password') Password 
+          input(type ='password', name='password', required)
+
+          button(type ='submit') Login 
+
+script.
+    document.addEventListener('DOMContentLoaded', () => {
+    const joinModal = document.getElementById('join-modal');
+    const openJoinBtn = document.getElementById('open-join-modal');
+    const closeJoinBtn = joinModal.querySelector('.close-button');
+
+    openJoinBtn.addEventListener('click', () => {
+        joinModal.style.display = 'flex';
+    });
+
+    closeJoinBtn.addEventListener('click', () => {
+        joinModal.style.display = 'none';
+    });
+
+    window.addEventListener('click', (e) => {
+        if (e.target === joinModal) {
+        joinModal.style.display = 'none';
+        }
+    });
+
+    // LOGIN MODAL
+    const loginModal = document.getElementById('login-modal');
+    const openLoginBtn = document.getElementById('open-login-modal');
+    const closeLoginBtn = loginModal.querySelector('.close-button');
+
+    openLoginBtn.addEventListener('click', () => {
+        loginModal.style.display = 'flex';
+    });
+
+    closeLoginBtn.addEventListener('click', () => {
+        loginModal.style.display = 'none';
+    });
+
+    window.addEventListener('click', (e) => {
+        if (e.target === loginModal) {
+        loginModal.style.display = 'none';
+        }
+    });
+    });

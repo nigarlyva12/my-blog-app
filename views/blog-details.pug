@@ -1,0 +1,34 @@
+doctype html
+html
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title= blog.title
+    link(rel="stylesheet", href="/css/style.css")
+    link(rel="stylesheet", href="/css/blog-detail.css")
+  body
+    include partials/nav
+
+    main.blog-article
+      .blog-container
+        h1.blog-title= blog.title
+
+        .blog-meta
+          .author-info
+            img.author-img(src="/images/admin.png", alt="Admin Avatar")
+            span.author-name Admin
+          span.dot •
+          span.date= blog.createdAt.toDateString()
+
+        .blog-content
+          != blog.content 
+
+        a.back-link(href="/blogs") ← Back to all blogs
+
+    footer.footer
+      .footer-lower
+          p © 2025 Nigar Aliyeva. All rights reserved.
+          nav.footer-legal
+              a(href="/privacy") Privacy Policy
+              a(href="/terms") Terms of Service
+

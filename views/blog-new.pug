@@ -1,0 +1,26 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        link(rel="stylesheet", href="/css/style.css")
+        link(rel="stylesheet", href="/css/blog.css")
+        title New Blog
+    body 
+
+        include partials/nav
+
+        main.blog-new-container
+          h1.blog-new-title Create a New Blog Post
+
+          form.blog-new-form(method='POST', action='/admin/blog/new')
+            label.blog-new-label(for='title') Title
+            input.blog-new-input(type='text', name='title', id='title', placeholder='Enter blog title...', required)
+
+            label.blog-new-label(for='content') Content
+            textarea.blog-new-textarea(name='content', id='content', placeholder='Write your blog content here...', required)
+            
+            label(for="tags") Tags (comma separated)
+            input#tags(type="text" name="tags" placeholder="e.g. javascript, webdev")
+            
+            button.blog-new-submit(type='submit') Publish

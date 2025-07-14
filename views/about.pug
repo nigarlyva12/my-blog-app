@@ -1,0 +1,38 @@
+doctype html
+html(lang="en")
+  head
+    title About Me
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    link(rel="stylesheet", href="/css/style.css")
+    link(rel="stylesheet", href="/css/about.css")
+  body
+    include partials/nav
+
+    main.about-wrapper
+      .about-header
+        img.profile-img(src="/images/adm.png", alt="Your profile photo")
+        h1 The Stacked Dev
+        p.subtitle Software Engineering Trainee & CS Enthusiast
+
+      .about-content
+        p
+          | I'm a software developer trainee passionate about creating web applications and exploring computer science concepts. I enjoy working with modern technologies like JavaScript, Node.js, and MongoDB.
+        p
+          | In this blog, I share my learnings, tutorials, and thoughts on programming, system design, and real-world engineering problems.
+
+        h2 What You’ll Find Here
+        ul.about-list
+          li → Hands-on guides and tutorials
+          li → CS fundamentals explained simply
+          li → My experiences and tips for new devs
+
+        h2 Let’s Connect
+        .social-links
+          a(href="https://github.com/yourusername" target="_blank") GitHub
+          a(href="https://linkedin.com/in/yourusername" target="_blank") LinkedIn
+          a(href="mailto:you@example.com") Email
+
+    footer.footer
+      .footer-lower
+        p © 2025 Nigar Aliyeva. All rights reserved.

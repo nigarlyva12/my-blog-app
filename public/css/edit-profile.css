@@ -1,0 +1,32 @@
+.edit-container {
+  max-width: 500px;
+  margin: 4rem auto;
+  padding: 2rem;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
+
+.edit-container label {
+  display: block;
+  margin-top: 1rem;
+  font-weight: bold;
+}
+
+.edit-container input {
+  width: 100%;
+  padding: 0.6rem;
+  margin-top: 0.3rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.edit-container button {
+  margin-top: 1.5rem;
+  padding: 0.7rem 1.2rem;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}

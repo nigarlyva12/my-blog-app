@@ -1,0 +1,151 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Press+Start+2P&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+body{
+    font-family: "Work Sans", sans-serif;
+}
+.blog-container {
+  max-width: 850px;
+  margin: 3rem auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.blog-filter {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.filter-btn {
+ padding: 0.7rem 1.5rem;
+  background: #fbf4cf;
+  border: 1px solid #000;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-family: "Work Sans", sans-serif;
+  transition: background 0.2s ease;
+  font-size: 1.1rem;
+}
+
+.filter-btn:hover {
+    background-color: #FDF9E7;
+}
+
+.blog-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.blog-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 1.5rem;
+  border-bottom: 1px solid #c7c6c6;
+  text-decoration: none;
+  color: inherit;
+  transition: background 0.2s ease;
+}
+
+.blog-row:hover {
+  background-color: #e9e8e8;
+  cursor: pointer;
+}
+
+.blog-left {
+  flex-grow: 1;
+}
+
+.blog-title {
+  margin: 0 0 0.4rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.blog-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.blog-tags li {
+  background: #fbf4cf;
+  padding: 0.2rem 0.55rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  color: #555;
+  border: 1px solid #c4c4c4;
+}
+
+.blog-right {
+  white-space: nowrap;
+  font-size: 0.9rem;
+  color: #888;
+}
+.content{
+    font-size: 0.9rem;
+    padding: 0.6rem 0;
+    width: 70%;
+    color:#7c7979;
+}
+.delete-btn {
+  background: transparent;
+  border: 2px solid red;
+  color: #e74c3c;
+  margin-top: 15px;
+  padding: 0.3rem 0.7rem;
+  font-size: 1.1rem;
+  cursor: pointer;
+  margin-left: 1rem;
+  transition: color 0.2s ease;
+}
+
+.delete-btn:hover {
+  color: #c0392b;
+}
+.blog-search-wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 2rem auto;
+  width: 100%;
+}
+
+.blog-search-form {
+  display: flex;
+  width: 100%;
+  max-width: 600px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+}
+
+.blog-search-form input[type="text"] {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border: none;
+  outline: none;
+  background: transparent;
+}
+
+.blog-search-form button {
+  padding: 0 1.2rem;
+  background-color: #fbf4cf;
+  color: #fff;
+  border: none;
+  border-left: 1px solid #ccc;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.blog-search-form button:hover {
+  background-color: #FDF9E7;
+}

@@ -1,0 +1,34 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title= user.username + ' | Profile'
+    link(rel="stylesheet", href="/css/style.css")
+    link(rel="stylesheet", href="/css/user.css")
+
+  body
+    include partials/nav
+
+    main.profile-wrapper
+      .profile-header
+        img.avatar(src=user.avatar || '/images/admin.png', alt='Profile picture')
+
+        .user-basic-info
+          h1= user.username
+          p.email 📧 #{user.email}
+          if user.isAdmin
+            p.role 🛠️ Admin
+          else
+            p.role 👤 Regular User
+
+      .profile-stats
+        ul
+          li
+            span.label Blogs Written:
+            span.value= user.blogCount || 0
+  
+      .profile-actions
+        a.btn(href="/user/edit") Edit Profile
+        if user.isAdmin
+          a.btn.admin(href="/admin/dashboard") Admin Dashboard

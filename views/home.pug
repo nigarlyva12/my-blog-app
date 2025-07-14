@@ -1,0 +1,67 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    link(rel="stylesheet", href="/css/style.css")
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css')
+    title Nigar Aliyeva Blog
+    
+  body
+    include partials/nav
+
+    section.home-section
+      if !user
+        h1 Unlock Your Computer Science Journey Today
+        p Lorem ipsum, dolor sit amet consectetur adipisicing elit. Corrupti unde harum illo velit quod totam aliquam sequi ea eveniet, et tenetur magnam veritatis officiis aperiam excepturi nisi? Tempore, fugit voluptatibus.
+      else 
+        h1 Hi, #{user.username} !
+        p Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum rerum fugit quae tempora dicta aliquam ipsam eius dolores aperiam dolor, dignissimos velit a iure inventore mollitia! Repellendus illum eius dolor!
+      .home-buttons
+        a.btn.btn-primary(href="/blogs") Explore
+
+      #three-shapes.home-image
+
+    section.blog-overview
+      .intro-text
+        h2 Latest Articles
+        p Discover a selection of recent blog posts designed to boost your understanding of computer science and software engineering concepts.
+
+      .articles
+        article.blog-card
+          img(src="/images/img1.avif", alt="Article 1 Image")
+          h3 Understanding Algorithms Simplified
+          p A beginner-friendly guide to grasping the basics of algorithms and their applications in real-world problems.
+          a.read-link(href="/blog/understanding-algorithms") Read More →
+
+        article.blog-card
+          img(src="/images/img2.avif", alt="Article 2 Image")
+          h3 Mastering JavaScript Closures
+          p Explore the concept of closures in JavaScript and learn how to use them effectively in your projects.
+          a.read-link(href="/blog/mastering-js-closures") Read More →
+
+        article.blog-card
+          img(src="/images/img3.avif", alt="Article 3 Image")
+          h3 Demystifying Data Structures
+          p Understand key data structures like arrays, linked lists, and trees with clear examples and visualizations.
+          a.read-link(href="/blog/demystifying-data-structures") Read More →
+
+      .learn-more-container
+        a.btn.btn-primary(href="/blogs") Learn More
+  
+    section.newsletter-section
+      .overlay
+      .content
+        h2 Subscribe to Our Newsletter
+        p Stay updated with the latest articles and tips delivered straight to your inbox.
+        form#subscribe-form
+          input(type="email", placeholder="Enter your email", required)
+          button(type="submit") Follow
+
+    include partials/footer
+
+    .cursor-circle
+
+
+    script(src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js")
+    script(src="/js/main.js")

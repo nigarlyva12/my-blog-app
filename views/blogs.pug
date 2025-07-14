@@ -1,0 +1,145 @@
+doctype html
+html
+  head
+    title Blog List
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    link(rel="stylesheet", href="/css/style.css")
+    link(rel="stylesheet", href="/css/blogs.css")
+  body
+
+    include partials/nav
+     //- h1 Blog Posts
+
+    //- if blogs.length === 0
+    //-   p No blogs to display.
+    //- else
+    //-   .blog-container
+    //-     each blog in blogs
+    //-       .card
+    //-         h2 #{blog.title}
+    //-         .meta By #{blog.author.username}
+    //-         .content 
+    //-             if blog.content
+    //-                 | #{blog.content.length > 150 ? blog.content.substring(0, 150) + '...' : blog.content}
+    //-             else
+    //-                 | No content
+    //-         if blog.createdAt
+    //-           .date Posted on #{blog.createdAt.toDateString()}
+    //-         a.read-more(href=`/home/blogs/${blog._id}`) Read More →
+    .blog-container
+      .blog-filter
+        button.filter-btn(data-category="frontend") Frontend
+        button.filter-btn(data-category="backend") Backend
+        button.filter-btn(data-category="cs") General CS
+
+      div.blog-search-wrapper
+        form#blog-search-form(class="blog-search-form")
+          input#search-input(type="text", name="q", placeholder="Search blogs...")
+          button(type="submit") 🔍
+      div.blog-list#blog-list
+        each blog in blogs
+          a.blog-row(href=`/blogs/${blog._id}`)
+            .blog-left
+              h3.blog-title= blog.title
+              .content 
+                if blog.content
+                    | #{blog.content.length > 130 ? blog.content.substring(0, 130) + '...' : blog.content}
+                else
+                    | No content
+              if blog.tags.length
+                ul.blog-tags
+                  each tag in blog.tags
+                    li= tag
+            .blog-right
+              span.blog-date= blog.createdAt.toDateString()
+
+              if user && user.isAdmin
+                form(method='POST', action=`/admin/blogs/${blog._id}/delete`, onsubmit="return confirm('Are you sure you want to delete this blog?');")
+                  button.delete-btn(type='submit') ❌
+
+    footer.footer
+      .footer-lower
+          p © 2025 Nigar Aliyeva. All rights reserved.
+          nav.footer-legal
+              a(href="/privacy") Privacy Policy
+              a(href="/terms") Terms of Service
+
+    script(src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js")          
+    script(src="/js/main.js")
+    script.
+      document.getElementById('blog-search-form').addEventListener('submit', async function (e) {
+        e.preventDefault();
+        const query = document.getElementById('search-input').value.trim();
+        const userIsAdmin = #{user && user.isAdmin ? 'true' : 'false'};
+
+        const res = await fetch(`/blogs/search?q=${encodeURIComponent(query)}`);
+        const blogs = await res.json();
+
+        const blogList = document.getElementById('blog-list');
+        blogList.innerHTML = '';
+
+        if (blogs.length === 0) {
+          blogList.innerHTML = '<p>No blogs found.</p>';
+        } else {
+          blogs.forEach(blog => {
+            const blogLink = document.createElement('a');
+            blogLink.classList.add('blog-row');
+            blogLink.href = `/blogs/${blog._id}`;
+
+            const left = document.createElement('div');
+            left.classList.add('blog-left');
+
+            const title = document.createElement('h3');
+            title.classList.add('blog-title');
+            title.textContent = blog.title;
+
+            const content = document.createElement('div');
+            content.classList.add('content');
+            content.textContent = blog.content && blog.content.length > 130
+              ? blog.content.substring(0, 130) + '...'
+              : blog.content || 'No content';
+
+            left.appendChild(title);
+            left.appendChild(content);
+
+            if (blog.tags && blog.tags.length > 0) {
+              const tagList = document.createElement('ul');
+              tagList.classList.add('blog-tags');
+              blog.tags.forEach(tag => {
+                const tagItem = document.createElement('li');
+                tagItem.textContent = tag;
+                tagList.appendChild(tagItem);
+              });
+              left.appendChild(tagList);
+            }
+
+            const right = document.createElement('div');
+            right.classList.add('blog-right');
+
+            const date = document.createElement('span');
+            date.classList.add('blog-date');
+            date.textContent = new Date(blog.createdAt).toDateString();
+            right.appendChild(date);
+
+            if (userIsAdmin === 'true') {
+              const deleteForm = document.createElement('form');
+              deleteForm.method = 'POST';
+              deleteForm.action = `/admin/blogs/${blog._id}/delete`;
+              deleteForm.onsubmit = () => confirm('Are you sure you want to delete this blog?');
+
+              const deleteButton = document.createElement('button');
+              deleteButton.classList.add('delete-btn');
+              deleteButton.type = 'submit';
+              deleteButton.textContent = '❌';
+
+              deleteForm.appendChild(deleteButton);
+              right.appendChild(deleteForm);
+            }
+
+            blogLink.appendChild(left);
+            blogLink.appendChild(right);
+            blogList.appendChild(blogLink);
+          });
+        }
+      });

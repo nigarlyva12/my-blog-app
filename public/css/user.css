@@ -1,0 +1,86 @@
+.profile-wrapper {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  font-family: 'Segoe UI', sans-serif;
+  color: #333;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.05);
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ccc;
+}
+
+.user-basic-info h1 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+.user-basic-info p {
+  margin: 0.4rem 0;
+  font-size: 1rem;
+  color: #555;
+}
+
+.profile-stats ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 1.5rem;
+  border-top: 1px solid #eee;
+  padding-top: 1rem;
+}
+
+.profile-stats li {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.6rem;
+}
+
+.label {
+  font-weight: 500;
+}
+
+.value {
+  font-weight: 400;
+  color: #444;
+}
+
+.profile-actions {
+  margin-top: 2rem;
+}
+
+.profile-actions .btn {
+  display: inline-block;
+  padding: 0.6rem 1.2rem;
+  background-color: #000;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 6px;
+  margin-right: 0.5rem;
+  transition: background-color 0.3s ease;
+}
+
+.profile-actions .btn:hover {
+  background-color: #222;
+}
+
+.profile-actions .btn.admin {
+  background-color: #d9534f;
+}
+
+.profile-actions .btn.admin:hover {
+  background-color: #c9302c;
+}
