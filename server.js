@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const passport = require('passport');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const bcrypt = require('bcrypt');
@@ -8,6 +9,7 @@ const path = require('path');
 const app = express();
 const User = require('./models/user');
 const Blog = require('./models/blog');
+require('./config/passport');
 const PORT = process.env.PORT || 3000;
 
 const isAdmin = require('./middleware/isAdmin');
@@ -19,8 +21,14 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-
-
+app.use((req, res, next) => {
+  res.locals.user = req.user;
+  next();
+});
+app.use((req, res, next) => {
+  res.locals.user = req.user || null;
+  next();
+});
 app.use(session({
   secret: process.env.SESSION_KEY,
   resave: false,
@@ -32,17 +40,45 @@ app.use(session({
   })
 }));
 
-app.use((req,res,next) => {
-  res.locals.user = req.session.user;
-  next();
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.get('/auth/google',
+  passport.authenticate('google', { scope: ['profile', 'email'] })
+);
+
+app.get('/auth/google/callback', (req, res, next) => {
+  passport.authenticate('google', (err, user, info) => {
+    if (err) return next(err);
+    if (!user && info && info.message === 'UserExists') {
+      
+      return res.redirect('/?oauth_error=user_exists');
+    }
+    if (!user) {
+      return res.redirect('/login?error=login_failed');
+    }
+    req.logIn(user, err => {
+      if (err) return next(err);
+      return res.redirect('/');
+    });
+  })(req, res, next);
 });
 
+
+app.get('/logout', (req, res) => {
+  req.logout(() => {
+    res.redirect('/');
+  });
+});
+
+
 app.get('/admin/blog/new', isAdmin, (req,res) => {
-  res.render('blog-new');
+  res.render('blog-new', { user: req.user });
 })
 
-app.get('/', (req, res) => {
-  res.render('home'); 
+app.get('/', (req, res) => { 
+ 
+  res.render('home', { user: req.user });
 });
 
 app.post('/register', async (req,res) =>{
@@ -105,14 +141,13 @@ app.get('/logout', (req, res) => {
 });
 //user details
 app.get('/user', (req, res) => {
-    if (!req.session.user) return res.redirect('/');
-    res.render('user', { user: req.session.user });
+    res.render('user', { user: req.user });
  });
 app.get('/blogs', async (req,res) => {
   try {
     const blogs = await Blog.find().sort({ createdAt: -1 }).populate('author', 'username');
     
-    res.render('blogs', { blogs });
+    res.render('blogs', { blogs, user: req.user  });
 
   } catch (err) {
     console.error(err);
@@ -142,7 +177,7 @@ app.get('/blogs/:id', async (req,res) =>{
         if(!blog){
             return res.status(400).send('Blog not found');
         }
-        res.render('blog-details', { blog });
+        res.render('blog-details', { blog, user: req.user  });
     }catch(error){
         res.status(500).send('Server error');
     }
@@ -174,11 +209,11 @@ app.get('/blogs/search', async (req,res) => {
 });
 
 app.get('/about', (req,res) => {
-  res.render('about');
+  res.render('about',{ user: req.user });
 });
 
 app.get('/user/edit', (req,res) => {
-  res.render('edit');
+  res.render('edit', { user: req.user });
 });
 
 app.post('/user/edit', async (req,res) => {
