@@ -10,4 +10,10 @@ function isAdmin(req, res, next) {
   next();
 }
 
-module.exports = isAdmin;
+module.exports = (req, res, next) => {
+  console.log('Checking if user is admin:', req.user);
+  if (!req.user || !req.user.isAdmin) {
+    return res.status(403).send('Unauthorized');
+  }
+  next();
+};

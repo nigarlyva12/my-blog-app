@@ -6,6 +6,7 @@ html
     title= blog.title
     link(rel="stylesheet", href="/css/style.css")
     link(rel="stylesheet", href="/css/blog-detail.css")
+    link(rel="icon" href="/images/favicon.png" type="image/x-icon")
   body
     include partials/nav
 
@@ -23,7 +24,8 @@ html
         .blog-content
           != blog.content 
 
-        a.back-link(href="/blogs") ← Back to all blogs
+        a.back-link(href="/blogs") ← Back to all blogs          
+        a.back-link(href="/")    ← Back to home
 
     footer.footer
       .footer-lower

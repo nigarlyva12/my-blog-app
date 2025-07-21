@@ -1,0 +1,31 @@
+.container {
+  max-width: 700px;
+  margin: 5rem auto;
+  padding: 1rem;
+  font-family: 'Segoe UI', sans-serif;
+  line-height: 1.6;
+  color: #333;
+}
+
+.container h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  border-bottom: 2px solid #ccc;
+  padding-bottom: 0.3rem;
+}
+
+.container h2 {
+  margin-top: 1.5rem;
+  font-size: 1.3rem;
+  color: #444;
+}
+
+.container ul {
+  margin-left: 1.2rem;
+  list-style-type: disc;
+}
+
+.container p.small {
+  font-size: 0.9rem;
+  color: #666;
+}

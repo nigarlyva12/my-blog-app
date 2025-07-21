@@ -22,13 +22,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.use((req, res, next) => {
-  res.locals.user = req.user;
-  next();
-});
-app.use((req, res, next) => {
   res.locals.user = req.user || null;
   next();
 });
+
 app.use(session({
   secret: process.env.SESSION_KEY,
   resave: false,
@@ -76,9 +73,14 @@ app.get('/admin/blog/new', isAdmin, (req,res) => {
   res.render('blog-new', { user: req.user });
 })
 
-app.get('/', (req, res) => { 
- 
-  res.render('home', { user: req.user });
+app.get('/', async (req, res) => { 
+  try{
+    const blogs = await Blog.find().sort({ createdAt: -1 }).limit(3);
+    res.render('home', { user: req.user, blogs });
+  } catch(err){
+    console.error(err);
+    res.status(500).send('Server error');
+  }
 });
 
 app.post('/register', async (req,res) =>{
@@ -119,14 +121,14 @@ app.post('/login', async (req, res) => {
     if(!isMatch){
       return res.status(400).send('invalid email or password');
     }
-    req.session.userId = user._id;
-    req.session.user = {
-      _id: user._id,
-      username: user.username,
-      email: user.email,
-      isAdmin: user.isAdmin
-    };
-    res.redirect('/');
+    
+    req.login(user, (err) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).send('Login failed');
+      }
+      return res.redirect('/');
+    });
   } catch (err) {
     console.error(err);
     res.send('Login failed');
@@ -164,7 +166,7 @@ app.get('/blogs', async (req,res) => {
     title,
     content,
     tags,
-    author: req.session.user._id
+    author: req.user._id
   });
   await newBlog.save();
   res.redirect('/blogs');
@@ -183,8 +185,8 @@ app.get('/blogs/:id', async (req,res) =>{
     }
 });
 
-app.post('/admin/blogs/:id/delete', async (req, res) => {
-  if (!req.session.user || !req.session.user.isAdmin) {
+app.post('/admin/blogs/:id/delete', isAdmin, async (req, res) => {
+  if (!req.user || !req.user.isAdmin) {
     return res.status(403).send('Unauthorized');
   }
 
@@ -240,6 +242,10 @@ app.post('/user/edit', async (req,res) => {
     res.status(500).send('Error updating profile');
   }
 })
+
+app.get('/privacy', (req, res) => {
+  res.render('privacy', { user: req.user });
+});
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

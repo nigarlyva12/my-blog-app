@@ -322,7 +322,7 @@ nav {
   transform: translateY(0);
 }
 .blog-card:hover {
-  transform: translateY(-12px) rotateX(1deg) rotateY(1deg) scale(1.01);
+  transform: translateY(-12px) rotateX(1deg) rotateY(1deg);
   box-shadow: 0 20px 40px rgba(0,0,0,0.25);
 }
 .blog-card img {
@@ -630,40 +630,45 @@ canvas {
   margin-bottom: 1rem;
   font-size: 1.6rem;
   text-align: center;
-}
-
-.modal-content label {
-  font-size: 0.95rem;
-  color: #333;
-  margin-bottom: 0.25rem;
+  color:#1e1e1e;
+  margin-bottom: 2rem;
 }
 
 .modal-content input {
   padding: 0.75rem 1rem;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+  border:none;
+  border-bottom: 1.3px solid #8a8989;
   font-size: 1rem;
   transition: border-color 0.3s;
 }
 
 .modal-content input:focus {
-  border-color: #007BFF;
+  border-color: #d37760;
   outline: none;
 }
 
-.modal-content button[type="submit"] {
-  padding: 0.75rem;
-  background-color: #007BFF;
-  border: none;
+.modal-content button[type="submit"]{
+  padding: 0.75rem 1rem;
+  border: 1px solid #000;
   border-radius: 8px;
-  color: #fff;
+  background-color: #ffa052;
+  color: #000;
   font-size: 1rem;
+  font-weight: 600;
   cursor: pointer;
   transition: background 0.3s;
+  margin-top: 1rem;
 }
-
+#google-auth-button{
+  width: 100%;
+  margin-top: 10px;
+  border: 1px solid #000;
+   border-radius: 8px;
+   background-color: white;
+   padding: 0.25rem;
+}
 .modal-content button[type="submit"]:hover {
-  background-color: #0056b3;
+  background-color: #f3af77;
 }
 
 /* Animation */
