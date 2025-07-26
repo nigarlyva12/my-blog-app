@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@swup/forms-plugin": "^3.6.0",
     "bcrypt": "^6.0.0",
     "connect-mongo": "^5.1.0",
     "dotenv": "^17.1.0",
@@ -20,6 +21,7 @@
     "nodemon": "^3.1.10",
     "passport": "^0.7.0",
     "passport-google-oauth20": "^2.0.0",
-    "pug": "^3.0.3"
+    "pug": "^3.0.3",
+    "swup": "^4.8.2"
   }
 }

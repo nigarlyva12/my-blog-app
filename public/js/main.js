@@ -50,20 +50,20 @@ animate();
 document.getElementById('theme-toggle')?.addEventListener('click', () => {
   setTimeout(createSpheres, 100); // Wait for DOM to update
 });
-  window.addEventListener('resize', () => {
-    camera.aspect = container.offsetWidth / 300;
-    camera.updateProjectionMatrix();
-    renderer.setSize(container.offsetWidth, 300);
-  });
+window.addEventListener('resize', () => {
+  camera.aspect = container.offsetWidth / 400;
+  camera.updateProjectionMatrix();
+  renderer.setSize(container.offsetWidth, 400);
+});
 
 //intersection observer
 const sections = document.querySelectorAll('section');
 
 // Options for the observer
 const options = {
-  root: null, 
+  root: null,
   rootMargin: '0px',
-  threshold: 0.15 
+  threshold: 0.15
 };
 
 const observer = new IntersectionObserver((entries, observer) => {
@@ -83,7 +83,7 @@ sections.forEach(section => {
   observer.observe(section);
 });
 
-  
+
 document.addEventListener('DOMContentLoaded', () => {
   const blogCards = document.querySelectorAll('.blog-card');
 
@@ -124,3 +124,22 @@ toggleBtn.addEventListener('click', () => {
 });
 
 
+
+window.addEventListener('DOMContentLoaded', () => {
+    const loader = document.getElementById('initial-loader');
+    const hasSeenLoader = sessionStorage.getItem('hasSeenLoader');
+
+    if (!hasSeenLoader) {
+      setTimeout(() => {
+        loader.style.opacity = '0';
+        loader.style.pointerEvents = 'none';
+        setTimeout(() => {
+          loader.remove();
+        }, 700);
+      }, 1200);
+
+      sessionStorage.setItem('hasSeenLoader', 'true');
+    } else {
+      loader.style.display = 'none';
+    }
+  });

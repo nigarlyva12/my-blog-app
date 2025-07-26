@@ -1,12 +1,15 @@
 doctype html
 html(lang="en")
     head
-        meta(charset="UTF-8")
-        meta(name="viewport", content="width=device-width, initial-scale=1.0")
-        link(rel="stylesheet", href="/css/style.css")
-        link(rel="stylesheet", href="/css/blog.css")
-        link(rel="icon" href="/images/favicon.png" type="image/x-icon")
-        title New Blog
+      meta(charset="UTF-8")
+      meta(name="viewport", content="width=device-width, initial-scale=1.0")
+      link(rel="stylesheet", href="/css/style.css")
+      link(rel="stylesheet", href="/css/blog.css")
+      link(rel="icon" href="/images/favicon.png" type="image/x-icon")
+     
+      link(rel="stylesheet", href="https://cdn.quilljs.com/1.3.6/quill.snow.css")
+
+      title New Blog
     body 
 
         include partials/nav
@@ -19,9 +22,32 @@ html(lang="en")
             input.blog-new-input(type='text', name='title', id='title', placeholder='Enter blog title...', required)
 
             label.blog-new-label(for='content') Content
-            textarea.blog-new-textarea(name='content', id='content', placeholder='Write your blog content here...', required)
-            
+            #editor(style="height: 300px;")
+            input(type='hidden', name="content", id='content')
+
             label(for="tags") Tags (comma separated)
             input#tags(type="text" name="tags" placeholder="e.g. javascript, webdev")
             
             button.blog-new-submit(type='submit') Publish
+
+        script(src="https://cdn.quilljs.com/1.3.6/quill.js")
+        script.
+            const quill = new Quill('#editor', {
+              theme: 'snow',
+              modules: {
+                toolbar: [
+                  [{ header: [1, 2, 3, false] }],
+                  ['bold', 'italic', 'underline', 'strike'],
+                  ['blockquote', 'code-block'],
+                  [{ list: 'ordered' }, { list: 'bullet' }],
+                  ['link', 'image'],
+                  ['clean']
+                ]
+              }
+            });
+
+            const form = document.querySelector('form.blog-new-form');
+            form.onsubmit = () => {
+              const contentInput = document.querySelector('input#content');
+              contentInput.value = quill.root.innerHTML;
+            };

@@ -45,7 +45,7 @@ html
               h3.blog-title= blog.title
               .content 
                 if blog.content
-                    | #{blog.content.length > 130 ? blog.content.substring(0, 130) + '...' : blog.content}
+                    | !{blog.content.length > 130 ? blog.content.substring(0, 130) + '...' : blog.content}
                 else
                     | No content
               if blog.tags.length

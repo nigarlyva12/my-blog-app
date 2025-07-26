@@ -1,10 +1,10 @@
 nav
     .nav-left
         a(href="/") Home
-        a(href="/blogs") Blogs
+        a(href="/blogs") Articles
         a(href="/about") About
         if user && user.isAdmin 
-            a(href="/admin/blog/new") New Blog
+            a(href="/admin/blog/new") New Article
     .nav-center
         .logo The Stacked Dev
     .nav-right
@@ -91,3 +91,25 @@ script.
         }
     });
     });
+
+
+    document.addEventListener('DOMContentLoaded', () => {
+   
+    const links = document.querySelectorAll('a[href]');
+    links.forEach(link => {
+      
+      if (link.target === '_blank' || link.href.indexOf(location.origin) !== 0) return;
+
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const url = link.href;
+
+        
+        document.body.classList.add('fade-out');
+        
+        setTimeout(() => {
+          window.location = url;
+        }, 500);
+      });
+    });
+  });

@@ -10,7 +10,10 @@ html(lang="en")
     
   body
     include partials/nav
-
+    #initial-loader
+      .loader-container
+        .loader-circle
+      
     section.home-section
       if !user
         h1 Unlock Your Computer Science Journey Today
@@ -34,9 +37,9 @@ html(lang="en")
             h3=blog.title
             p
               if blog.content
-                = blog.content.length > 150 ? blog.content.substring(0, 150) + '...' : blog.content
+                | !{blog.content.length > 130 ? blog.content.substring(0, 130) + '...' : blog.content}
               else
-                | No content available.
+                | No content
             a.read-link(href=`/blogs/${blog._id}`) Read More →
 
       .learn-more-container
