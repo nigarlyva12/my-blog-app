@@ -25,7 +25,7 @@ app.use((req, res, next) => {
   res.locals.user = req.user || null;
   next();
 });
-    console.log('Google Client ID:', process.env.GOOGLE_CLIENT_ID);
+    
 app.use(session({
   secret: process.env.SESSION_KEY,
   resave: false,
