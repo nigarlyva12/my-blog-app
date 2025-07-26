@@ -1,23 +1,23 @@
-require('dotenv').config();
+const path = require('path');
+require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 const express = require('express');
 const passport = require('passport');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const bcrypt = require('bcrypt');
 const MongoStore = require('connect-mongo');
-const path = require('path');
 const app = express();
-const User = require('./models/user');
-const Blog = require('./models/blog');
-require('./config/passport');
+const User = require('../models/user');
+const Blog = require('../models/blog');
+require('../config/passport');
 const PORT = process.env.PORT || 3000;
 
-const isAdmin = require('./middleware/isAdmin');
- require('./config/db')();
+const isAdmin = require('../middleware/isAdmin');
+ require('../config/db')();
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '../public')));
 app.set('view engine', 'pug');
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, '../views'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
@@ -25,7 +25,7 @@ app.use((req, res, next) => {
   res.locals.user = req.user || null;
   next();
 });
-
+    console.log('Google Client ID:', process.env.GOOGLE_CLIENT_ID);
 app.use(session({
   secret: process.env.SESSION_KEY,
   resave: false,
