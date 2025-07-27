@@ -29,3 +29,20 @@
   font-size: 0.9rem;
   color: #666;
 }
+@media (max-width: 768px){
+  .container h1{
+    font-size: 1.2rem;
+  }
+  .container h2{
+    font-size: 0.9rem;
+  }
+  .container p.small{
+    font-size: 0.7rem;
+  }
+  .container ul li{
+    font-size: 0.7rem;
+  }
+  .container p{
+    font-size: 1rem;
+  }
+}

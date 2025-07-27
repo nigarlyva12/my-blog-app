@@ -1,27 +1,35 @@
-nav
-    .nav-left
-        a(href="/") Home
-        a(href="/blogs") Articles
-        a(href="/about") About
-        if user && user.isAdmin 
-            a(href="/admin/blog/new") New Article
-    .nav-center
-        .logo The Stacked Dev
-    .nav-right
-        button#theme-toggle(aria-label="Toggle light/dark theme") 🌓
+nav 
+    div.wrapper 
+        .hamburger#hamburger-menu
+            span
+            span
+            span
+        div.logo-mobile The Stacked Dev
+        
+    .nav-wrapper
+        .nav-left
+            a(href="/") Home
+            a(href="/blogs") Articles
+            a(href="/about") About
+            if user && user.isAdmin 
+                a(href="/admin/blog/new") New Article
+        .nav-center
+            .logo The Stacked Dev
+        .nav-right
+            button#theme-toggle 🌓
 
-        if !user 
-            button.join-btn#open-join-modal Join⚡
-            button.login-btn#open-login-modal Login 👋🏻
-        else 
-            div.profile-container
-                a.profile-link( title='View Profile') 
-                   span 👤 #{user.username}
-                ul.profile-dropdown
-                    li
-                        a(href='/user') Profile
-                    li
-                        a.logout-btn(href='/logout') Logout
+            if !user 
+                button.join-btn#open-join-modal Join⚡
+                button.login-btn#open-login-modal Login 👋🏻
+            else 
+                div.profile-container
+                    a.profile-link( title='View Profile') 
+                    span 👤 #{user.username}
+                    ul.profile-dropdown
+                        li
+                            a(href='/user') Profile
+                        li
+                            a.logout-btn(href='/logout') Logout
         
         
 div#join-modal.modal 
@@ -113,3 +121,12 @@ script.
       });
     });
   });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const hamburger = document.getElementById('hamburger-menu');
+        const navWrapper = document.querySelector('.nav-wrapper');
+
+        hamburger.addEventListener('click', () => {
+            navWrapper.classList.toggle('show');
+        });
+    });

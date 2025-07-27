@@ -63,3 +63,28 @@
 .social-links a:hover {
   color: #023e8a;
 }
+
+@media (max-width: 768px){
+  .about-header .profile-img{
+    width: 100px;
+    height: 100px;
+  }
+  .about-header h1{
+    font-size: 1.2rem;
+  }
+  .about-header p{
+    font-size: 0.9rem;    
+  }
+  .about-content p{
+    font-size: 0.9rem;
+  }
+  .about-content h2{
+    font-size: 0.9rem;
+  }
+  .about-content .about-list{
+    font-size: 0.9rem;
+  }
+  .social-links{
+    font-size: 0.9rem;
+  }
+}

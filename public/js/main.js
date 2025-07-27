@@ -4,29 +4,43 @@ const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(70, container.offsetWidth / 500, 0.1, 1000);
 const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
 
-renderer.setSize(container.offsetWidth, 500);
-renderer.setPixelRatio(window.devicePixelRatio);
+function setRendererSize() {
+  const width = container.offsetWidth;
+  const height = 500;
+  camera.aspect = width / height;
+  camera.updateProjectionMatrix();
+  renderer.setSize(width, height);
+  renderer.setPixelRatio(window.devicePixelRatio);
+}
+
+setRendererSize(); // Initial setup
 container.appendChild(renderer.domElement);
 
 scene.add(new THREE.AmbientLight(0xffffff, 1.2));
 camera.position.z = 8;
 
-const positions = [-6, -4, -2, 0, 2, 4, 6];
+function getPositions() {
+  const width = container.offsetWidth;
+  const count = width < 500 ? 4 : width < 800 ? 5 : 7;
+  const spacing = 2 * (7 / count); // Adjust spacing
+  const startX = -((count - 1) / 2) * spacing;
+
+  return Array.from({ length: count }, (_, i) => startX + i * spacing);
+}
 
 function createSpheres() {
   spheres.forEach(s => scene.remove(s));
   spheres = [];
 
   const isDark = document.body.classList.contains('dark-theme');
+  const color = isDark ? 0xfef8b4 : 0x000000;
+  const geometry = new THREE.SphereGeometry(1.8, 30, 10);
+  const material = new THREE.MeshBasicMaterial({ color, wireframe: true });
 
-  positions.forEach((xPos, i) => {
-    const geometry = new THREE.SphereGeometry(1.8, 30, 10);
-    const color = isDark ? 0xfef8b4 : 0x000000;
-    const material = new THREE.MeshBasicMaterial({ color, wireframe: true });
-
+  const positions = getPositions();
+  positions.forEach((xPos) => {
     const mesh = new THREE.Mesh(geometry, material);
     mesh.position.set(xPos, 0, 0);
-
     scene.add(mesh);
     spheres.push(mesh);
   });
@@ -42,6 +56,11 @@ function animate() {
   renderer.render(scene, camera);
 }
 
+// 🌐 Handle window resize
+window.addEventListener('resize', () => {
+  setRendererSize();
+  createSpheres();
+});
 
 createSpheres();
 animate();
@@ -51,9 +70,9 @@ document.getElementById('theme-toggle')?.addEventListener('click', () => {
   setTimeout(createSpheres, 100); // Wait for DOM to update
 });
 window.addEventListener('resize', () => {
-  camera.aspect = container.offsetWidth / 400;
+  camera.aspect = container.offsetWidth / 300;
   camera.updateProjectionMatrix();
-  renderer.setSize(container.offsetWidth, 400);
+  renderer.setSize(container.offsetWidth, 300);
 });
 
 //intersection observer
@@ -70,6 +89,7 @@ const observer = new IntersectionObserver((entries, observer) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       entry.target.classList.add('in-view');
+      observer.unobserve(entry.target);
       console.log(`Entered: ${entry.target.className || entry.target.tagName}`);
     } else {
       entry.target.classList.remove('in-view');
