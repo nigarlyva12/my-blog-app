@@ -177,7 +177,7 @@ app.get('/blogs/:id', async (req,res) =>{
     try{
         const blog = await Blog.findById(blogId).populate('author', 'username');;
         if(!blog){
-            return res.status(400).send('Blog not found');
+            return res.redirect('/blogs');;
         }
         res.render('blog-details', { blog, user: req.user  });
     }catch(error){
@@ -185,30 +185,17 @@ app.get('/blogs/:id', async (req,res) =>{
     }
 });
 
-app.post('/admin/blogs/:id/delete', isAdmin, async (req, res) => {
-  if (!req.user || !req.user.isAdmin) {
-    return res.status(403).send('Unauthorized');
-  }
-
+app.delete('/admin/blogs/:id/delete', isAdmin, async (req, res) => {
   try {
     await Blog.findByIdAndDelete(req.params.id);
-    res.redirect('/blogs');
+    res.status(200).json({ message: 'Blog deleted' });
   } catch (err) {
     console.error(err);
-    res.status(500).send('Failed to delete blog');
+    res.status(500).send('Server error');
   }
 });
 
-app.get('/blogs/search', async (req,res) => {
-  const query = req.query.q || '';
-  const blogs = await Blog.find({
-    $or: [
-      { title: { $regex: query, $options: 'i' } },
-      { content: { $regex: query, $options: 'i' } }
-    ]
-  }).limit(20);
-  res.json(blogs);
-});
+
 
 app.get('/about', (req,res) => {
   res.render('about',{ user: req.user });
